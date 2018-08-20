@@ -3,6 +3,7 @@ package dev.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,12 +19,16 @@ public class Collegue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nom")
     private String nom;
 
+    @Column(name = "prenom")
     private String prenom;
 
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "motDePasse")
     private String motDePasse;
 
     @OneToMany(mappedBy = "collegue", cascade = CascadeType.PERSIST)

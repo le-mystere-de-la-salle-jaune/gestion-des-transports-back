@@ -1,18 +1,25 @@
 package dev;
 
-import dev.domain.Collegue;
-import dev.domain.Role;
-import dev.domain.RoleCollegue;
-import dev.domain.Version;
-import dev.repository.CollegueRepo;
-import dev.repository.VersionRepo;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import dev.domain.Adresse;
+import dev.domain.Annonce;
+import dev.domain.Collegue;
+import dev.domain.Role;
+import dev.domain.RoleCollegue;
+import dev.domain.Vehicule;
+import dev.domain.Version;
+import dev.repository.AnnonceRepo;
+import dev.repository.CollegueRepo;
+import dev.repository.VehiculeRepo;
+import dev.repository.VersionRepo;
 
 /**
  * Code de démarrage de l'application.
@@ -25,12 +32,16 @@ public class StartupListener {
     private VersionRepo versionRepo;
     private PasswordEncoder passwordEncoder;
     private CollegueRepo collegueRepo;
+    private AnnonceRepo annonceRepo;
+    private VehiculeRepo vehiculeRepo;
 
-    public StartupListener(@Value("${app.version}") String appVersion, VersionRepo versionRepo, PasswordEncoder passwordEncoder, CollegueRepo collegueRepo) {
+    public StartupListener(@Value("${app.version}") String appVersion, VersionRepo versionRepo, PasswordEncoder passwordEncoder, CollegueRepo collegueRepo, AnnonceRepo annonceRepo, VehiculeRepo vehiculeRepo) {
         this.appVersion = appVersion;
         this.versionRepo = versionRepo;
         this.passwordEncoder = passwordEncoder;
         this.collegueRepo = collegueRepo;
+        this.annonceRepo = annonceRepo;
+        this.vehiculeRepo = vehiculeRepo;
     }
 
     @EventListener(ContextRefreshedEvent.class)
@@ -54,6 +65,17 @@ public class StartupListener {
         col2.setMotDePasse(passwordEncoder.encode("superpass"));
         col2.setRoles(Arrays.asList(new RoleCollegue(col2, Role.ROLE_UTILISATEUR)));
         this.collegueRepo.save(col2);
+        
+        Vehicule v1 = new Vehicule("457-5874-44");
+        vehiculeRepo.save(v1);
+        
+        Annonce ann = new Annonce();
+        ann.setAdresseArrivee(new Adresse("2","bd de la ville","Paris","76000","France"));
+        ann.setAdresseDepart(new Adresse("85","Rue de la fritte","Bruxel","ZDF-54","Belgique"));
+        ann.setCollaborateurs(col1);
+        ann.setDateDepart(LocalDateTime.now());
+        ann.setVehiculeCovoitureur(v1);
+        annonceRepo.save(ann);
     }
 
 }
