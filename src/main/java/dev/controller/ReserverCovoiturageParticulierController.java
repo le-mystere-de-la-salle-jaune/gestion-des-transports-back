@@ -34,7 +34,7 @@ public class ReserverCovoiturageParticulierController {
 		List<Annonce> annonces = annonceRepo.findAll();
 
 		List<ReserverAfficherAnnonceVM> afficherAnnonceVM = new ArrayList<>();
-		afficherAnnonceVM = annonces.stream().filter(annonce -> ville.equals(annonce.getAdresseDepart().getVille())).map(annonce -> { 
+		afficherAnnonceVM = annonces.stream().filter(annonce -> ville.toLowerCase().equals(annonce.getAdresseDepart().getVille().toLowerCase())).map(annonce -> { 
 			ReserverAfficherAnnonceVM annonceVM = new ReserverAfficherAnnonceVM();
 			annonceVM.setId(annonce.getId());
 			annonceVM.setAdresse_depart(annonce.getAdresseDepart());
