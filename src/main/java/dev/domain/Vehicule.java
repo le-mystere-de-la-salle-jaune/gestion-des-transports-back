@@ -2,8 +2,6 @@ package dev.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,8 +42,8 @@ public class Vehicule {
 	/**
 	 * categorie : Categories, énumaration contenant les différentes catégories
 	 */
-	@Enumerated(EnumType.STRING)
-	private Categories categorie;
+	// @Enumerated(EnumType.STRING)
+	private String categorie;
 
 	public Vehicule() {
 
@@ -62,6 +60,14 @@ public class Vehicule {
 		this.immatriculation = immatriculation;
 		this.marque = marque;
 		this.modele = modele;
+	}
+
+	public Vehicule(String photoUrl, String immatriculation, String marque, String modele, Categories categorie) {
+		this.photoUrl = photoUrl;
+		this.immatriculation = immatriculation;
+		this.marque = marque;
+		this.modele = modele;
+		this.categorie = categorie.getLibelle();
 	}
 
 	/**
@@ -142,15 +148,15 @@ public class Vehicule {
 	/**
 	 * @return la catégorie du véhicule.
 	 */
-	public Categories getCategorie() {
-		return categorie;
+	public String getCategorie() {
+		return this.categorie;
 	}
 
 	/**
 	 * @param categorie
 	 *            : définie la catégorie de la voiture
 	 */
-	public void setCategorie(Categories categorie) {
+	public void setCategorie(String categorie) {
 		this.categorie = categorie;
 	}
 }

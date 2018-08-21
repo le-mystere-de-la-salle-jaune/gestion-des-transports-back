@@ -8,6 +8,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import dev.domain.Categories;
 import dev.domain.Collegue;
 import dev.domain.Role;
 import dev.domain.RoleCollegue;
@@ -61,13 +62,18 @@ public class StartupListener {
 		col2.setRoles(Arrays.asList(new RoleCollegue(col2, Role.ROLE_UTILISATEUR)));
 		this.collegueRepo.save(col2);
 
-		Vehicule vehicule1 = new Vehicule("AB-123-CD", "Peaugot", "106");
+		Vehicule vehicule1 = new Vehicule(
+				"https://rzpict1.blob.core.windows.net/images/autowereld.nl/RZCATWNL27446716/PEUGEOT-106-0.jpg",
+				"AB-123-CD", "Peaugot", "106", Categories.CITADINES_POLYVALENTES);
 		this.vehiculeRepo.save(vehicule1);
 
-		Vehicule vehicule2 = new Vehicule("EF-456-GH", "Renault", "207");
+		Vehicule vehicule2 = new Vehicule(
+				"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Peugeot_106_front_20090730.jpg/1200px-Peugeot_106_front_20090730.jpg",
+				"EF-456-GH", "Renault", "207", Categories.BERLINES_TAILL_L);
 		this.vehiculeRepo.save(vehicule2);
 
-		Vehicule vehicule3 = new Vehicule("IJ-789-KL", "Citroen", "308");
+		Vehicule vehicule3 = new Vehicule("https://www.ouicar.fr/media/283370-product", "IJ-789-KL", "Citroen", "308",
+				Categories.BERLINES_TAILL_M);
 		this.vehiculeRepo.save(vehicule3);
 
 	}
