@@ -26,13 +26,13 @@ public class VehiculeService {
 	}
 
 	public void maj(Vehicule vehicule) {
-		if (findVehiculeById(vehicule.getId()) == null) {
+		if (findVehiculeById(vehicule.getId()) != null) {
 			vehiculeRepository.save(vehicule);
 		}
 	}
 
-	public void supprimer(Vehicule vehicule) {
-		vehiculeRepository.delete(vehicule);
+	public void supprimer(Long id) {
+		vehiculeRepository.deleteById(id);
 	}
 
 	public Vehicule findVehiculeById(Long id) {

@@ -1,6 +1,9 @@
 package dev.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,14 +29,22 @@ public class Vehicule {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "photoUrl")
 	private String photoUrl;
+
+	@Column(name = "immatriculation")
 	private String immatriculation;
+
+	@Column(name = "marque")
 	private String marque;
+
+	@Column(name = "modele")
 	private String modele;
 
 	/**
 	 * categorie : Categories, énumaration contenant les différentes catégories
 	 */
+	@Enumerated(EnumType.STRING)
 	private Categories categorie;
 
 	public Vehicule() {

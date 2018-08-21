@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.domain.Vehicule;
 import dev.metier.VehiculeService;
 
-@RestController("/api/vehicules")
+@RestController
 @RequestMapping(value = "/api/vehicules")
 public class VehiculeApiController {
 
@@ -60,6 +61,18 @@ public class VehiculeApiController {
 		vehiculeService.maj(v);
 
 		return ResponseEntity.status(HttpStatus.OK).body(v);
+
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> supprimer(@PathVariable Long id) throws Exception {
+
+		if (this.vehiculeService.findVehiculeById(id) != null) {
+			this.vehiculeService.supprimer(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Vehicule deleted successfully");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Vehicule id doesn't match any vehicule");
+		}
 
 	}
 
