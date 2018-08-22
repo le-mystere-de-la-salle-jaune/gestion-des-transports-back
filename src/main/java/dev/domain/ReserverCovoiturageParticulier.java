@@ -23,6 +23,10 @@ public class ReserverCovoiturageParticulier {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@ManyToOne
+	@JoinColumn(name = "id_collaborateur")
+    private Collegue collaborateurs;
+	
 	@Column(name="date_depart")
 	private LocalDateTime dateDepart;
 	
@@ -59,12 +63,13 @@ public class ReserverCovoiturageParticulier {
 		super();
 	}
 
-	public ReserverCovoiturageParticulier(LocalDateTime dateDepart, Adresse adresseDepart, Adresse adresseArrivee,Annonce annonce) {
+	public ReserverCovoiturageParticulier(Collegue collaborateurs, LocalDateTime dateDepart, Adresse adresseDepart, Adresse adresseArrivee,Annonce annonce) {
 		super();
 		this.dateDepart = dateDepart;
 		this.adresseDepart = adresseDepart;
 		this.adresseArrivee = adresseArrivee;
 		this.annonce = annonce;
+		this.collaborateurs = collaborateurs;
 	}
 
 	public Long getId() {
@@ -105,6 +110,14 @@ public class ReserverCovoiturageParticulier {
 
 	public void setAnnonce(Annonce optional) {
 		this.annonce = optional;
+	}
+
+	public Collegue getCollaborateurs() {
+		return collaborateurs;
+	}
+
+	public void setCollaborateurs(Collegue collaborateurs) {
+		this.collaborateurs = collaborateurs;
 	}
 	
 	

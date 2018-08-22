@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.controller.vm.CreerReservationVM;
 import dev.controller.vm.ReserverAfficherAnnonceVM;
 import dev.domain.Adresse;
 import dev.domain.Annonce;
+import dev.domain.Collegue;
 import dev.domain.ReserverCovoiturageParticulier;
 import dev.repository.AnnonceRepo;
+import dev.repository.CollegueRepo;
 import dev.repository.ReserverCovoiturageParticulierRepo;
 
 @RestController
@@ -26,11 +29,13 @@ public class ReserverCovoiturageParticulierController {
 
 	private ReserverCovoiturageParticulierRepo reserverCovoitRepo;
 	private AnnonceRepo annonceRepo;
+	private CollegueRepo collegueRepo;
 	
 	public ReserverCovoiturageParticulierController(
-			ReserverCovoiturageParticulierRepo reserverCovoitRepo, AnnonceRepo annonceRepo) {
+			ReserverCovoiturageParticulierRepo reserverCovoitRepo, AnnonceRepo annonceRepo,CollegueRepo collegueRepo) {
 		this.reserverCovoitRepo = reserverCovoitRepo;
 		this.annonceRepo = annonceRepo;
+		this.collegueRepo = collegueRepo;
 	}
 	
 	@GetMapping("/reserver/{ville}")
@@ -53,8 +58,8 @@ public class ReserverCovoiturageParticulierController {
 	}
 	
 	@PutMapping("/reserver/creer")
-	public ResponseEntity<ReserverAfficherAnnonceVM> ajouterReservation(@RequestBody ReserverAfficherAnnonceVM reservation){
-		ReserverAfficherAnnonceVM res = new ReserverAfficherAnnonceVM();
+	public ResponseEntity<CreerReservationVM> ajouterReservation(@RequestBody CreerReservationVM reservation){
+		CreerReservationVM res = new CreerReservationVM();
 		Adresse adresseDepart = new Adresse();
 		adresseDepart.setCodePostal(reservation.getAdresse_depart().getCodePostal());
 		adresseDepart.setDesignationVoie(reservation.getAdresse_depart().getDesignationVoie());
@@ -69,15 +74,16 @@ public class ReserverCovoiturageParticulierController {
 		adresseArriver.setPays(reservation.getAdresse_arriver().getPays());
 		adresseArriver.setVille(reservation.getAdresse_depart().getVille());
 
+		Annonce ann = annonceRepo.findById(reservation.getId_annonce()).get();
+		Collegue collegue = collegueRepo.findById(reservation.getId_collegue()).get();
 		//sauvegarde de la réservation
-		reserverCovoitRepo.save(new ReserverCovoiturageParticulier(reservation.getDepart(), adresseDepart, adresseArriver, annonceRepo.findById(reservation.getId()).get()));
+		reserverCovoitRepo.save(new ReserverCovoiturageParticulier(collegue, reservation.getDepart(), adresseDepart, adresseArriver, ann));
 		//on retire 1 place à l'annonce
-		Annonce ann = annonceRepo.findById(reservation.getId()).get();
 		ann.setNbPlace(ann.getNbPlace()-1);
 		annonceRepo.save(ann);
 		
 		//String num, String street, String city, String zipCode, String country
-		res.setId(1566L);
+		res.setId_annonce(15656L);
 		return ResponseEntity.ok().body(res);
 		
 	}
