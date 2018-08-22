@@ -32,6 +32,12 @@ public class VehiculeApiController {
 		return ResponseEntity.status(HttpStatus.OK).body(vehicules);
 	}
 
+	@GetMapping("/societe")
+	public ResponseEntity<List<Vehicule>> listerSociete() {
+		List<Vehicule> vehiculesSociete = this.vehiculeService.listerSociete();
+		return ResponseEntity.status(HttpStatus.OK).body(vehiculesSociete);
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Vehicule> afficherVehicule(@PathVariable Long id) throws Exception {
 
@@ -44,6 +50,8 @@ public class VehiculeApiController {
 		Vehicule v = new Vehicule(vehicule.getImmatriculation(), vehicule.getMarque(), vehicule.getModele());
 		v.setPhotoUrl(vehicule.getPhotoUrl());
 		v.setCategorie(vehicule.getCategorie());
+		v.setPlaces(vehicule.getPlaces());
+		v.setSociete(vehicule.getSociete());
 		vehiculeService.ajouter(v);
 
 		return ResponseEntity.status(HttpStatus.OK).body(v);
@@ -58,6 +66,8 @@ public class VehiculeApiController {
 		v.setModele(vehicule.getModele());
 		v.setPhotoUrl(vehicule.getPhotoUrl());
 		v.setCategorie(vehicule.getCategorie());
+		v.setPlaces(vehicule.getPlaces());
+		v.setSociete(vehicule.getSociete());
 		vehiculeService.maj(v);
 
 		return ResponseEntity.status(HttpStatus.OK).body(v);
@@ -65,13 +75,10 @@ public class VehiculeApiController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> supprimer(@PathVariable Long id) throws Exception {
+	public void supprimer(@PathVariable Long id) throws Exception {
 
 		if (this.vehiculeService.findVehiculeById(id) != null) {
 			this.vehiculeService.supprimer(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Vehicule deleted successfully");
-		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Vehicule id doesn't match any vehicule");
 		}
 
 	}

@@ -13,7 +13,8 @@ import javax.persistence.Id;
  *         Classe véhicule. Un véhicule contient : un ID auto incrémenté lors de
  *         l'entrée en BDD, une url internet d'une photo de la voiture, une
  *         plaque d'immatriculation au format XX-XXX-XX (2 chiffres, 3 lettres,
- *         2 chiffres), une marque, un modele, une catégorie, un propriétaire
+ *         2 chiffres), une marque, un modele, une catégorie, un nombre de
+ *         place.
  *
  */
 
@@ -42,8 +43,13 @@ public class Vehicule {
 	/**
 	 * categorie : Categories, énumaration contenant les différentes catégories
 	 */
-	// @Enumerated(EnumType.STRING)
 	private String categorie;
+
+	@Column(name = "places")
+	private int places;
+
+	@Column(name = "societe")
+	boolean societe = false;
 
 	public Vehicule() {
 
@@ -62,12 +68,25 @@ public class Vehicule {
 		this.modele = modele;
 	}
 
-	public Vehicule(String photoUrl, String immatriculation, String marque, String modele, Categories categorie) {
+	public Vehicule(String photoUrl, String immatriculation, String marque, String modele, Categories categorie,
+			int places) {
 		this.photoUrl = photoUrl;
 		this.immatriculation = immatriculation;
 		this.marque = marque;
 		this.modele = modele;
 		this.categorie = categorie.getLibelle();
+		this.places = places;
+	}
+
+	public Vehicule(String photoUrl, String immatriculation, String marque, String modele, Categories categorie,
+			int places, boolean societe) {
+		this.photoUrl = photoUrl;
+		this.immatriculation = immatriculation;
+		this.marque = marque;
+		this.modele = modele;
+		this.categorie = categorie.getLibelle();
+		this.places = places;
+		this.societe = societe;
 	}
 
 	/**
@@ -158,5 +177,35 @@ public class Vehicule {
 	 */
 	public void setCategorie(String categorie) {
 		this.categorie = categorie;
+	}
+
+	/**
+	 * @return le nombre de place du véhicule.
+	 */
+	public int getPlaces() {
+		return this.places;
+	}
+
+	/**
+	 * @param places
+	 *            : définie le nombre de place de la voiture
+	 */
+	public void setPlaces(int places) {
+		this.places = places;
+	}
+
+	/**
+	 * @return true si le véhicule est un véhicule de société, 0 sinon.
+	 */
+	public boolean getSociete() {
+		return this.societe;
+	}
+
+	/**
+	 * @param societe
+	 *            : définie si le véhicule est un véhicule de société ou non.
+	 */
+	public void setSociete(boolean societe) {
+		this.societe = societe;
 	}
 }

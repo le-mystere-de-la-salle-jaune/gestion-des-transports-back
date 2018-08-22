@@ -1,5 +1,6 @@
 package dev.metier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +20,18 @@ public class VehiculeService {
 
 	public List<Vehicule> lister() {
 		return vehiculeRepository.findAll();
+	}
+
+	public List<Vehicule> listerSociete() {
+		List<Vehicule> listeVehicule = new ArrayList();
+		List<Vehicule> listeVehiculeSociete = new ArrayList();
+		listeVehicule = lister();
+		for (Vehicule vh : listeVehicule) {
+			if (vh.getSociete() == true) {
+				listeVehiculeSociete.add(vh);
+			}
+		}
+		return listeVehiculeSociete;
 	}
 
 	public void ajouter(Vehicule vehicule) {
