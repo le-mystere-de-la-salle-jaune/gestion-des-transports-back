@@ -1,6 +1,7 @@
 package dev.domain;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -51,5 +52,61 @@ public class ReserverCovoiturageParticulier {
 	@ManyToOne
 	@JoinColumn(name = "id_annonce")
 	private Annonce annonce;
+
+	
+	
+	public ReserverCovoiturageParticulier() {
+		super();
+	}
+
+	public ReserverCovoiturageParticulier(LocalDateTime dateDepart, Adresse adresseDepart, Adresse adresseArrivee,Annonce annonce) {
+		super();
+		this.dateDepart = dateDepart;
+		this.adresseDepart = adresseDepart;
+		this.adresseArrivee = adresseArrivee;
+		this.annonce = annonce;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getDateDepart() {
+		return dateDepart;
+	}
+
+	public void setDateDepart(LocalDateTime dateDepart) {
+		this.dateDepart = dateDepart;
+	}
+
+	public Adresse getAdresseDepart() {
+		return adresseDepart;
+	}
+
+	public void setAdresseDepart(Adresse adresseDepart) {
+		this.adresseDepart = adresseDepart;
+	}
+
+	public Adresse getAdresseArrivee() {
+		return adresseArrivee;
+	}
+
+	public void setAdresseArrivee(Adresse adresseArrivee) {
+		this.adresseArrivee = adresseArrivee;
+	}
+
+	public Annonce getAnnonce() {
+		return annonce;
+	}
+
+	public void setAnnonce(Annonce optional) {
+		this.annonce = optional;
+	}
+	
+	
 
 }

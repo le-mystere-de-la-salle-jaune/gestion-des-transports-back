@@ -74,6 +74,7 @@ public class StartupListener {
         ann.setCollaborateurs(col1);
         ann.setDateDepart(LocalDateTime.now());
         ann.setVehiculeCovoitureur(v1);
+        ann.setNbPlace(4);
         annonceRepo.save(ann);
     }
 
