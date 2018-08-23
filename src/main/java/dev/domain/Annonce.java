@@ -59,6 +59,9 @@ public class Annonce {
 
 	@Column(name = "date_depart")
 	private LocalDateTime dateDepart;
+	
+	@Column(name = "nombre_place")
+	private int nbPlace;
 
 	public Long getId() {
 		return id;
@@ -107,6 +110,16 @@ public class Annonce {
 	public void setDateDepart(LocalDateTime dateDepart) {
 		this.dateDepart = dateDepart;
 	}
+
+	public int getNbPlace() {
+		return nbPlace;
+	}
+
+	public void setNbPlace(int nbPlace) {
+		this.nbPlace = nbPlace;
+	}
+	
+	
 	
 	
 }

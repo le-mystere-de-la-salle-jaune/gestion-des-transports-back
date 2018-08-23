@@ -36,7 +36,10 @@ public class Vehicule {
 	@Column(name = "immatriculation")
 	private String immatriculation;
 	
+	@Column(name = "marque")
 	private String marque;
+	
+	@Column(name = "modele")
 	private String modele;
 	
 	/**
@@ -56,8 +59,14 @@ public class Vehicule {
 		
 	}
 	
-	public Vehicule(String immatriculation){
+	
+
+	public Vehicule(String immatriculation, String marque, String modele, Categories categorie) {
+		super();
 		this.immatriculation = immatriculation;
+		this.marque = marque;
+		this.modele = modele;
+		this.categorie = categorie;
 	}
 
 	/**

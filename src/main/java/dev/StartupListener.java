@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import dev.domain.Adresse;
 import dev.domain.Annonce;
+import dev.domain.Categories;
 import dev.domain.Collegue;
 import dev.domain.Role;
 import dev.domain.RoleCollegue;
@@ -66,7 +67,7 @@ public class StartupListener {
         col2.setRoles(Arrays.asList(new RoleCollegue(col2, Role.ROLE_UTILISATEUR)));
         this.collegueRepo.save(col2);
         
-        Vehicule v1 = new Vehicule("457-5874-44");
+        Vehicule v1 = new Vehicule("457-5874-44", "Citron", "Agrume 300", Categories.BERLINES_TAILL_L);
         vehiculeRepo.save(v1);
         
         Annonce ann = new Annonce();
