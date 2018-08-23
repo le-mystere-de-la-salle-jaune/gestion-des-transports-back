@@ -3,7 +3,6 @@ package dev.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -38,12 +37,12 @@ public class ReserverCovoiturageParticulierController {
 		this.collegueRepo = collegueRepo;
 	}
 	
-	@GetMapping("/reserver/{ville}")
+	@GetMapping("/reserver/creer/{ville}")
 	public ResponseEntity<List<ReserverAfficherAnnonceVM>> getListAnnonce(@PathVariable String ville){
 		List<Annonce> annonces = annonceRepo.findAll();
 
 		List<ReserverAfficherAnnonceVM> afficherAnnonceVM = new ArrayList<>();
-		afficherAnnonceVM = annonces.stream().filter(annonce -> ville.toLowerCase().equals(annonce.getAdresseDepart().getVille().toLowerCase())).map(annonce -> { 
+		afficherAnnonceVM = annonces.stream().filter(annonce -> (ville.toLowerCase().equals(annonce.getAdresseDepart().getVille().toLowerCase()) && annonce.getDateDepart().isAfter(LocalDateTime.now()))).map(annonce -> { 
 			ReserverAfficherAnnonceVM annonceVM = new ReserverAfficherAnnonceVM();
 			annonceVM.setId(annonce.getId());
 			annonceVM.setAdresse_depart(annonce.getAdresseDepart());
@@ -59,7 +58,6 @@ public class ReserverCovoiturageParticulierController {
 	
 	@PutMapping("/reserver/creer")
 	public ResponseEntity<CreerReservationVM> ajouterReservation(@RequestBody CreerReservationVM reservation){
-		CreerReservationVM res = new CreerReservationVM();
 		Adresse adresseDepart = new Adresse();
 		adresseDepart.setCodePostal(reservation.getAdresse_depart().getCodePostal());
 		adresseDepart.setDesignationVoie(reservation.getAdresse_depart().getDesignationVoie());
@@ -82,9 +80,7 @@ public class ReserverCovoiturageParticulierController {
 		ann.setNbPlace(ann.getNbPlace()-1);
 		annonceRepo.save(ann);
 		
-		//String num, String street, String city, String zipCode, String country
-		res.setId_annonce(15656L);
-		return ResponseEntity.ok().body(res);
+		return ResponseEntity.ok().body(reservation);
 		
 	}
 	
