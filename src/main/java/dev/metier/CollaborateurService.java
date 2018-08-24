@@ -1,21 +1,28 @@
 package dev.metier;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
 import dev.domain.Collaborateur;
+import dev.domain.Role;
+import dev.domain.RoleCollaborateur;
 import dev.repository.CollaborateurRepo;
+import dev.repository.RoleCollaborateurRepo;
 
 @Service
 public class CollaborateurService {
 
 	private CollaborateurRepo collaborateurRepository;
+	private RoleCollaborateurRepo roleCollaborateurRepo;
 
-	public CollaborateurService(CollaborateurRepo CollaborateurRepository) {
+	public CollaborateurService(CollaborateurRepo collaborateurRepository,
+			RoleCollaborateurRepo roleCollaborateurRepo) {
 		super();
-		this.collaborateurRepository = CollaborateurRepository;
+		this.collaborateurRepository = collaborateurRepository;
+		this.roleCollaborateurRepo = roleCollaborateurRepo;
 	}
 
 	public List<Collaborateur> lister() {
@@ -23,16 +30,33 @@ public class CollaborateurService {
 	}
 
 	public List<Collaborateur> listerChauffeurs() {
-		return collaborateurRepository.findAll();
+		List<Collaborateur> tousLesCollabs = collaborateurRepository.findAll();
+		List<Collaborateur> touslesChauffeurs = new ArrayList<>();
+
+		for (Collaborateur c : tousLesCollabs) {
+			List<RoleCollaborateur> rolesC = c.getRoles();
+			for (RoleCollaborateur rc : rolesC) {
+				if (rc.getRole().toString().equals("ROLE_CHAUFFEUR")) {
+					touslesChauffeurs.add(c);
+				}
+			}
+		}
+
+		return touslesChauffeurs;
 	}
 
-	public void ajouter(Collaborateur Collaborateur) {
-		collaborateurRepository.save(Collaborateur);
+	public void ajouter(Collaborateur collaborateur) {
+		collaborateurRepository.save(collaborateur);
 	}
 
-	public void maj(Collaborateur Collaborateur) {
-		if (findCollaborateurById(Collaborateur.getId()) != null) {
-			collaborateurRepository.save(Collaborateur);
+	public void ajouterChauffeur(Collaborateur collaborateur) {
+		RoleCollaborateur roleChauffeur = new RoleCollaborateur(collaborateur, Role.ROLE_CHAUFFEUR);
+		roleCollaborateurRepo.save(roleChauffeur);
+	}
+
+	public void maj(Collaborateur collaborateur) {
+		if (findCollaborateurById(collaborateur.getId()) != null) {
+			collaborateurRepository.save(collaborateur);
 		}
 	}
 
@@ -60,6 +84,13 @@ public class CollaborateurService {
 
 	public List<Collaborateur> findByRole(String role) {
 		return collaborateurRepository.findByRole(role).orElse(null);
+	}
+
+	public Collaborateur ajouterRoleChauffeur(Collaborateur collab) {
+
+		RoleCollaborateur roleChauffeur = new RoleCollaborateur(collab, Role.ROLE_CHAUFFEUR);
+		collab.getRoles().add(roleChauffeur);
+		return collab;
 	}
 
 }

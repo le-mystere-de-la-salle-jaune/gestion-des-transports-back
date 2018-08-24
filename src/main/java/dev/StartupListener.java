@@ -47,7 +47,7 @@ public class StartupListener {
 	public void onStart() {
 		this.versionRepo.save(new Version(appVersion));
 
-		// Création de deux utilisateurs
+		// Création de cinq utilisateurs
 
 		Collaborateur col1 = new Collaborateur();
 		col1.setNom("Admin");
@@ -63,8 +63,10 @@ public class StartupListener {
 		col2.setNom("User");
 		col2.setPrenom("DEV");
 		col2.setEmail("user@dev.fr");
+		this.collaborateurService.creerMatricule(col2);
 		col2.setMotDePasse(passwordEncoder.encode("superpass"));
 		col2.setRoles(Arrays.asList(new RoleCollaborateur(col2, Role.ROLE_UTILISATEUR)));
+		col2.setPhotoUrl("http://nicolaspene.fr/wp-content/uploads/2012/09/troll-300x300.jpg");
 		this.collaborateurService.ajouter(col2);
 
 		Collaborateur col3 = new Collaborateur();
@@ -77,6 +79,8 @@ public class StartupListener {
 		col3.setRoles(Arrays.asList(new RoleCollaborateur(col3, Role.ROLE_UTILISATEUR),
 				new RoleCollaborateur(col3, Role.ROLE_CHAUFFEUR)));
 		col3.setTelephone("06 35 21 09 48");
+		col3.setPhotoUrl(
+				"https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Marcel_Pagnol_1931.jpg/260px-Marcel_Pagnol_1931.jpg");
 		this.collaborateurService.ajouter(col3);
 
 		Collaborateur col4 = new Collaborateur();
@@ -91,6 +95,8 @@ public class StartupListener {
 		col4.setRoles(Arrays.asList(new RoleCollaborateur(col4, Role.ROLE_UTILISATEUR),
 				new RoleCollaborateur(col4, Role.ROLE_CHAUFFEUR)));
 		col4.setTelephone("06 35 21 09 47");
+		col4.setPhotoUrl(
+				"https://www.ouest-france.fr/sites/default/files/styles/image-640x360-p/public/2017/01/15/florent-pagny-se-fait-voler-sa-porsche-par-de-faux-policiers.jpg?itok=eubSGZSE");
 		this.collaborateurService.ajouter(col4);
 
 		Collaborateur col5 = new Collaborateur();
@@ -104,6 +110,8 @@ public class StartupListener {
 		col5.setRoles(Arrays.asList(new RoleCollaborateur(col5, Role.ROLE_UTILISATEUR),
 				new RoleCollaborateur(col5, Role.ROLE_CHAUFFEUR)));
 		col5.setTelephone("06 35 21 09 45");
+		col5.setPhotoUrl(
+				"https://img3.closermag.fr/var/closermag/storage/images/1/2/6/0/0/12600072/celine-dion-traverse-sale-moment-ces-dernieres-semaines_exact540x405_l.jpg");
 		this.collaborateurService.ajouter(col5);
 
 		Vehicule vehicule1 = new Vehicule(

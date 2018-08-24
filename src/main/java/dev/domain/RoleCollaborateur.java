@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class RoleCollaborateur {
 
@@ -16,6 +18,7 @@ public class RoleCollaborateur {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "collaborateur_id")
 	private Collaborateur collaborateur;
@@ -51,7 +54,7 @@ public class RoleCollaborateur {
 		return collaborateur;
 	}
 
-	public void setCollaborateur(Collaborateur collegue) {
+	public void setCollaborateur(Collaborateur collaborateur) {
 		this.collaborateur = collaborateur;
 	}
 }

@@ -1,13 +1,18 @@
 package dev.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.controller.vm.CollaborateurChauffeurVM;
 import dev.domain.Collaborateur;
 import dev.metier.CollaborateurService;
 
@@ -23,56 +28,42 @@ public class CollaborateurApiController {
 
 	@GetMapping
 	public ResponseEntity<List<Collaborateur>> lister() {
-		List<Collaborateur> collaborateurs = this.collaborateurService.lister();
-		return ResponseEntity.status(HttpStatus.OK).body(collaborateurs);
+		List<Collaborateur> collabs = this.collaborateurService.lister();
+
+		return ResponseEntity.status(HttpStatus.OK).body(collabs);
 	}
 
-	@GetMapping("/chauffeur")
-	public ResponseEntity<List<Collaborateur>> listerChauffeurs() {
+	@GetMapping("/chauffeurs")
+	public ResponseEntity<List<CollaborateurChauffeurVM>> listerChauffeurs() {
 		List<Collaborateur> chauffeurs = this.collaborateurService.listerChauffeurs();
-		return ResponseEntity.status(HttpStatus.OK).body(chauffeurs);
+		List<CollaborateurChauffeurVM> listeCollaborateurChauffeurVm = chauffeurs.stream()
+				.map(unChauffeur -> new CollaborateurChauffeurVM(unChauffeur)).collect(Collectors.toList());
+
+		return ResponseEntity.status(HttpStatus.OK).body(listeCollaborateurChauffeurVm);
 	}
 
-	/*
-	 * @GetMapping("/{id}") public ResponseEntity<Vehicule>
-	 * afficherVehicule(@PathVariable Long id) throws Exception {
-	 * 
-	 * Vehicule vehicule = this.vehiculeService.findVehiculeById(id); return
-	 * ResponseEntity.status(HttpStatus.OK).body(vehicule); }
-	 * 
-	 * @PostMapping public ResponseEntity<Vehicule> creer(@RequestBody Vehicule
-	 * vehicule) { Vehicule v = new Vehicule(vehicule.getImmatriculation(),
-	 * vehicule.getMarque(), vehicule.getModele());
-	 * v.setPhotoUrl(vehicule.getPhotoUrl());
-	 * v.setCategorie(vehicule.getCategorie());
-	 * v.setPlaces(vehicule.getPlaces()); v.setSociete(vehicule.getSociete());
-	 * vehiculeService.ajouter(v);
-	 * 
-	 * return ResponseEntity.status(HttpStatus.OK).body(v);
-	 * 
-	 * }
-	 * 
-	 * @PutMapping public ResponseEntity<Vehicule> update(@RequestBody Vehicule
-	 * vehicule) { Vehicule v =
-	 * vehiculeService.findVehiculeById(vehicule.getId());
-	 * v.setImmatriculation(vehicule.getImmatriculation());
-	 * v.setMarque(vehicule.getMarque()); v.setModele(vehicule.getModele());
-	 * v.setPhotoUrl(vehicule.getPhotoUrl());
-	 * v.setCategorie(vehicule.getCategorie());
-	 * v.setPlaces(vehicule.getPlaces()); v.setSociete(vehicule.getSociete());
-	 * vehiculeService.maj(v);
-	 * 
-	 * return ResponseEntity.status(HttpStatus.OK).body(v);
-	 * 
-	 * }
-	 * 
-	 * @DeleteMapping("/{id}") public void supprimer(@PathVariable Long id)
-	 * throws Exception {
-	 * 
-	 * if (this.vehiculeService.findVehiculeById(id) != null) {
-	 * this.vehiculeService.supprimer(id); }
-	 * 
-	 * }
-	 */
+	@GetMapping("/{id}")
+	public ResponseEntity<CollaborateurChauffeurVM> afficherChauffeur(@PathVariable Long id) throws Exception {
+
+		Collaborateur collab = this.collaborateurService.findCollaborateurById(id);
+		CollaborateurChauffeurVM chauffeur = new CollaborateurChauffeurVM(collab);
+		return ResponseEntity.status(HttpStatus.OK).body(chauffeur);
+	}
+
+	@GetMapping("/chauffeurs/{matricule}")
+	public ResponseEntity<CollaborateurChauffeurVM> afficherChauffeur(@PathVariable String matricule) throws Exception {
+
+		Collaborateur collab = this.collaborateurService.findCollaborateurByMatricule(matricule);
+		CollaborateurChauffeurVM chauffeur = new CollaborateurChauffeurVM(collab);
+		return ResponseEntity.status(HttpStatus.OK).body(chauffeur);
+	}
+
+	@PutMapping("/chauffeurs")
+	public ResponseEntity<Collaborateur> update(@RequestBody String matricule) {
+		Collaborateur c = collaborateurService.findCollaborateurByMatricule(matricule);
+		collaborateurService.ajouterChauffeur(c);
+		return ResponseEntity.status(HttpStatus.OK).body(c);
+
+	}
 
 }

@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Collaborateur {
 
@@ -26,13 +28,17 @@ public class Collaborateur {
 
 	private String matricule;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "collaborateur", cascade = CascadeType.PERSIST)
 	private List<PermisCollaborateur> permis;
 
 	private String telephone;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "collaborateur", cascade = CascadeType.PERSIST)
 	private List<RoleCollaborateur> roles;
+
+	private String photoUrl;
 
 	public Long getId() {
 		return id;
@@ -104,6 +110,14 @@ public class Collaborateur {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
+
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
 	}
 
 }

@@ -8,8 +8,8 @@ import dev.domain.Collaborateur;
 import dev.domain.Role;
 
 /**
- * Structure modèlisant un collègue servant à communiquer avec l'extérieur (WEB
- * API).
+ * Structure modèlisant un collaborateur servant à communiquer avec l'extérieur
+ * (WEB API).
  */
 public class CollaborateurVM {
 
