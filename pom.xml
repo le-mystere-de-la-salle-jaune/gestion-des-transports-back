@@ -107,7 +107,7 @@
             </activation>
             <properties>
                 <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
-                <jdbc.url>jdbc:mysql://localhost:3306/sirh-db</jdbc.url>
+                <jdbc.url>jdbc:mysql://localhost:3306/projet</jdbc.url>
                 <jdbc.user>root</jdbc.user>
                 <jdbc.pass></jdbc.pass>
                 <jpa.hibernate.ddl>create</jpa.hibernate.ddl>

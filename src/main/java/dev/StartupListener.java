@@ -33,16 +33,17 @@ public class StartupListener {
     private VersionRepo versionRepo;
     private PasswordEncoder passwordEncoder;
     private CollegueRepo collegueRepo;
+    private VehiculeRepo vehiculeRepo; 
     private AnnonceRepo annonceRepo;
-    private VehiculeRepo vehiculeRepo;
 
     public StartupListener(@Value("${app.version}") String appVersion, VersionRepo versionRepo, PasswordEncoder passwordEncoder, CollegueRepo collegueRepo, AnnonceRepo annonceRepo, VehiculeRepo vehiculeRepo) {
         this.appVersion = appVersion;
         this.versionRepo = versionRepo;
         this.passwordEncoder = passwordEncoder;
         this.collegueRepo = collegueRepo;
-        this.annonceRepo = annonceRepo;
         this.vehiculeRepo = vehiculeRepo;
+        this.annonceRepo = annonceRepo;
+
     }
 
     @EventListener(ContextRefreshedEvent.class)
@@ -72,10 +73,13 @@ public class StartupListener {
         
         Annonce ann = new Annonce();
         ann.setAdresseArrivee(new Adresse("2","bd de la ville","Paris","76000","France"));
-        ann.setAdresseDepart(new Adresse("85","Rue de la fritte","Bruxel","ZDF-54","Belgique"));
+
+        ann.setAdresseDepart(new Adresse("85","Rue de la fritte","Bruxelles","ZDF-54","Belgique"));
         ann.setCollaborateurs(col1);
-        ann.setDateDepart(LocalDateTime.now());
+        ann.setDateDepart(LocalDateTime.of(2019, 9, 25, 10, 20));
         ann.setVehiculeCovoitureur(v1);
+        ann.setNbPlace(4);
+
         annonceRepo.save(ann);
     }
 

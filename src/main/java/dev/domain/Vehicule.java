@@ -59,8 +59,6 @@ public class Vehicule {
 		
 	}
 	
-	
-
 	public Vehicule(String immatriculation, String marque, String modele, Categories categorie) {
 		super();
 		this.immatriculation = immatriculation;

@@ -7,3 +7,4 @@ import dev.domain.Annonce;
 public interface AnnonceRepo extends JpaRepository<Annonce, Long>{
 
 }
+
