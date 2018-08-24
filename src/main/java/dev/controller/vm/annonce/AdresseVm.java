@@ -1,31 +1,41 @@
-package dev.domain;
+package dev.controller.vm.annonce;
 
-import javax.persistence.Embeddable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Embeddable
-public class Adresse {
+import dev.domain.Adresse;
+
+public class AdresseVm {
 	
+	@JsonProperty("street_number")
 	private String numeroVoie;
 	
+	@JsonProperty("route")
 	private String designationVoie;
 	
+	@JsonProperty("locality")
 	private String ville;
 	
+	@JsonProperty("postal_code")
 	private String codePostal;
 	
+	@JsonProperty("country")
 	private String pays;
 	
-	public Adresse(){
+	public AdresseVm(){
 		
 	}
+
 	
-	public Adresse(String num, String street, String city, String zipCode, String country){
-		numeroVoie = num;
-		designationVoie = street;
-		ville = city;
-		codePostal = zipCode;
-		pays = country;
+	public AdresseVm(String numeroVoie, String designationVoie, String ville, String codePostal, String pays) {
+		super();
+		this.numeroVoie = numeroVoie;
+		this.designationVoie = designationVoie;
+		this.ville = ville;
+		this.codePostal = codePostal;
+		this.pays = pays;
 	}
+
+
 
 	public String getNumeroVoie() {
 		return numeroVoie;
@@ -67,6 +77,14 @@ public class Adresse {
 		this.pays = pays;
 	}
 
+
+	public Adresse toAdresse() {
+
+		return new Adresse(numeroVoie,designationVoie,ville,codePostal,pays);
+	}
 	
+	
+
 }
+
 

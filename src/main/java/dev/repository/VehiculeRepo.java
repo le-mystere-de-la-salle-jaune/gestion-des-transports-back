@@ -8,3 +8,4 @@ import dev.domain.Vehicule;
 public interface VehiculeRepo extends JpaRepository<Vehicule, Long> {
 
 }
+

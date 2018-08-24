@@ -59,10 +59,10 @@ public class Annonce {
 
 	@Column(name = "date_depart")
 	private LocalDateTime dateDepart;
-
-	@Column(name = "nombre_place")
-    private int nbPlace;
 	
+	@Column(name = "nombre_place")
+	private int nbPlace;
+
 	public Long getId() {
 		return id;
 	}
@@ -118,6 +118,6 @@ public class Annonce {
 	public void setNbPlace(int nbPlace) {
 		this.nbPlace = nbPlace;
 	}
-	
-	
 }
+
+
