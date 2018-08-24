@@ -76,7 +76,7 @@ public class StartupListener {
 
         ann.setAdresseDepart(new Adresse("85","Rue de la fritte","Bruxelles","ZDF-54","Belgique"));
         ann.setCollaborateurs(col1);
-        ann.setDateDepart(LocalDateTime.now());
+        ann.setDateDepart(LocalDateTime.of(2019, 9, 25, 10, 20));
         ann.setVehiculeCovoitureur(v1);
         ann.setNbPlace(4);
 
