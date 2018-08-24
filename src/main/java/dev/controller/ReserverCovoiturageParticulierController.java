@@ -37,6 +37,25 @@ public class ReserverCovoiturageParticulierController {
 		this.collaborateurRepo = collaborateurRepo;
 	}
 
+	// lister les reservations
+	@GetMapping("/api/reservations")
+	public ResponseEntity<List<ReserverAfficherAnnonceVM>> getReservations() {
+		List<ReserverCovoiturageParticulier> reservations = this.reserverCovoitRepo.findAll();
+		List<ReserverAfficherAnnonceVM> reservationsVm = reservations.stream().map(uneResa -> {
+			ReserverAfficherAnnonceVM resa = new ReserverAfficherAnnonceVM();
+			resa.setAdresse_arriver(uneResa.getAdresseArrivee());
+			resa.setAdresse_depart(uneResa.getAdresseDepart());
+			resa.setChauffeur(uneResa.getCollaborateurs().getNom() + " " + uneResa.getCollaborateurs().getPrenom());
+			resa.setDepart(uneResa.getDateDepart());
+			resa.setId(uneResa.getId());
+			resa.setPlace(uneResa.getAnnonce().getNbPlace());
+			resa.setVehicule(uneResa.getAnnonce().getVehiculeCovoitureur().getMarque() + " "
+					+ uneResa.getAnnonce().getVehiculeCovoitureur().getModele());
+			return resa;
+		}).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(reservationsVm);
+	}
+
 	@GetMapping("/reserver/creer/{ville}")
 	public ResponseEntity<List<ReserverAfficherAnnonceVM>> getListAnnonce(@PathVariable String ville) {
 		List<Annonce> annonces = annonceRepo.findAll();

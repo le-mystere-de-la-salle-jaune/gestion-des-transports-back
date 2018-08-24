@@ -17,11 +17,15 @@ import dev.domain.Categories;
 import dev.domain.Collaborateur;
 import dev.domain.Permis;
 import dev.domain.PermisCollaborateur;
+import dev.domain.ReservationVehiculeSociete;
+import dev.domain.ReserverCovoiturageParticulier;
 import dev.domain.Role;
 import dev.domain.RoleCollaborateur;
 import dev.domain.Vehicule;
 import dev.domain.Version;
 import dev.repository.AnnonceRepo;
+import dev.repository.ReservationVehiculeSocieteRepo;
+import dev.repository.ReserverCovoiturageParticulierRepo;
 import dev.repository.VehiculeRepo;
 import dev.repository.VersionRepo;
 import dev.services.CollaborateurService;
@@ -38,16 +42,21 @@ public class StartupListener {
 	private CollaborateurService collaborateurService;
 	private VehiculeRepo vehiculeRepo;
 	private AnnonceRepo annonceRepo;
+	private ReserverCovoiturageParticulierRepo resaRepo;
+	private ReservationVehiculeSocieteRepo resaSocieteRepo;
 
 	public StartupListener(@Value("${app.version}") String appVersion, VersionRepo versionRepo,
 			PasswordEncoder passwordEncoder, CollaborateurService collaborateurService, AnnonceRepo annonceRepo,
-			VehiculeRepo vehiculeRepo) {
+			VehiculeRepo vehiculeRepo, ReserverCovoiturageParticulierRepo resaRepo,
+			ReservationVehiculeSocieteRepo resaSocieteRepo) {
 		this.appVersion = appVersion;
 		this.versionRepo = versionRepo;
 		this.passwordEncoder = passwordEncoder;
 		this.collaborateurService = collaborateurService;
 		this.vehiculeRepo = vehiculeRepo;
 		this.annonceRepo = annonceRepo;
+		this.resaRepo = resaRepo;
+		this.resaSocieteRepo = resaSocieteRepo;
 
 	}
 
@@ -145,14 +154,89 @@ public class StartupListener {
 
 		Annonce ann = new Annonce();
 		ann.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
-
 		ann.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxelles", "ZDF-54", "Belgique"));
 		ann.setCollaborateurs(col1);
 		ann.setDateDepart(LocalDateTime.of(2019, 9, 25, 10, 20));
-		ann.setVehiculeCovoitureur(v1);
+		ann.setVehiculeCovoitureur(vehicule4);
 		ann.setNbPlace(4);
-
 		annonceRepo.save(ann);
+
+		Annonce ann2 = new Annonce();
+		ann2.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
+		ann2.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxelles", "ZDF-54", "Belgique"));
+		ann2.setCollaborateurs(col1);
+		ann2.setDateDepart(LocalDateTime.of(2014, 9, 25, 10, 20));
+		ann2.setVehiculeCovoitureur(vehicule4);
+		ann2.setNbPlace(4);
+		annonceRepo.save(ann2);
+
+		ReserverCovoiturageParticulier resa = new ReserverCovoiturageParticulier();
+		resa.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
+		resa.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxel", "ZDF-54", "Belgique"));
+		resa.setAnnonce(ann);
+		resa.setCollaborateurs(col1);
+		resa.setDateDepart(LocalDateTime.of(2018, 12, 24, 10, 00));
+		resa.setId(1L);
+		resaRepo.save(resa);
+
+		ReserverCovoiturageParticulier resa1 = new ReserverCovoiturageParticulier();
+		resa1.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
+		resa1.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxel", "ZDF-54", "Belgique"));
+		resa1.setAnnonce(ann2);
+		resa1.setCollaborateurs(col1);
+		resa1.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
+		resa1.setId(2L);
+		resaRepo.save(resa1);
+
+		ReserverCovoiturageParticulier resa2 = new ReserverCovoiturageParticulier();
+		resa2.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
+		resa2.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxel", "ZDF-54", "Belgique"));
+		resa2.setAnnonce(ann2);
+		resa2.setCollaborateurs(col1);
+		resa2.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
+		resa2.setId(3L);
+		resaRepo.save(resa2);
+
+		ReserverCovoiturageParticulier resa3 = new ReserverCovoiturageParticulier();
+		resa3.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
+		resa3.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxel", "ZDF-54", "Belgique"));
+		resa3.setAnnonce(ann2);
+		resa3.setCollaborateurs(col1);
+		resa3.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
+		resa3.setId(4L);
+		resaRepo.save(resa3);
+
+		ReserverCovoiturageParticulier resa4 = new ReserverCovoiturageParticulier();
+		resa4.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
+		resa4.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxel", "ZDF-54", "Belgique"));
+		resa4.setAnnonce(ann2);
+		resa4.setCollaborateurs(col1);
+		resa4.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
+		resa4.setId(5L);
+		resaRepo.save(resa4);
+
+		ReserverCovoiturageParticulier resa5 = new ReserverCovoiturageParticulier();
+		resa5.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
+		resa5.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxel", "ZDF-54", "Belgique"));
+		resa5.setAnnonce(ann2);
+		resa5.setCollaborateurs(col1);
+		resa5.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
+		resa5.setId(6L);
+		resaRepo.save(resa5);
+
+		ReservationVehiculeSociete resaSociete1 = new ReservationVehiculeSociete();
+		resaSociete1.setDateDebut(LocalDateTime.of(2018, 12, 24, 10, 00));
+		resaSociete1.setDateFin(LocalDateTime.of(2018, 12, 28, 10, 00));
+		resaSociete1.setId(1L);
+		resaSociete1.setVehicule(vehicule1);
+		resaSocieteRepo.save(resaSociete1);
+
+		ReservationVehiculeSociete resaSociete2 = new ReservationVehiculeSociete();
+		resaSociete2.setDateDebut(LocalDateTime.of(2014, 12, 24, 10, 00));
+		resaSociete2.setDateFin(LocalDateTime.of(2014, 12, 28, 10, 00));
+		resaSociete2.setId(2L);
+		resaSociete2.setVehicule(vehicule1);
+		resaSocieteRepo.save(resaSociete2);
 	}
 
 }
