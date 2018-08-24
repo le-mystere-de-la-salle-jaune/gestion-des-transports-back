@@ -13,21 +13,20 @@ import dev.services.AnnonceService;
 @RestController
 @RequestMapping("/api")
 public class AnnonceApiController {
-	
+
 	AnnonceService annonceService;
-	
+
 	public AnnonceApiController(AnnonceService annonceService) {
 		this.annonceService = annonceService;
 	}
 
-	
 	@RequestMapping(value = "/publier_annonce", method = RequestMethod.POST)
 	public ResponseEntity<?> enregistrerAnnonce(@RequestBody AnnonceVm annonceToSave) {
-		
+
 		System.out.println(annonceToSave);
 		annonceService.saveNewAnnonce(annonceToSave.toAnnonce());
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body("Annonce enregistrer.");
 	}
-	
+
 }
