@@ -70,7 +70,7 @@ public class StartupListener {
         
         Annonce ann = new Annonce();
         ann.setAdresseArrivee(new Adresse("2","bd de la ville","Paris","76000","France"));
-        ann.setAdresseDepart(new Adresse("85","Rue de la fritte","Bruxel","ZDF-54","Belgique"));
+        ann.setAdresseDepart(new Adresse("85","Rue de la fritte","Bruxelles","ZDF-54","Belgique"));
         ann.setCollaborateurs(col1);
         ann.setDateDepart(LocalDateTime.now());
         ann.setVehiculeCovoitureur(v1);

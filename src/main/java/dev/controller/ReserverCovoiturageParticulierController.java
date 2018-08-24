@@ -40,9 +40,10 @@ public class ReserverCovoiturageParticulierController {
 	@GetMapping("/reserver/creer/{ville}")
 	public ResponseEntity<List<ReserverAfficherAnnonceVM>> getListAnnonce(@PathVariable String ville){
 		List<Annonce> annonces = annonceRepo.findAll();
-
+		
 		List<ReserverAfficherAnnonceVM> afficherAnnonceVM = new ArrayList<>();
-		afficherAnnonceVM = annonces.stream().filter(annonce -> (ville.toLowerCase().equals(annonce.getAdresseDepart().getVille().toLowerCase()) && annonce.getDateDepart().isAfter(LocalDateTime.now()))).map(annonce -> { 
+		afficherAnnonceVM = annonces.stream().filter(annonce -> (ville.toLowerCase().equals(annonce.getAdresseDepart().getVille().toLowerCase()) && annonce.getDateDepart().isAfter(LocalDateTime.now())))
+				.map(annonce -> { 
 			ReserverAfficherAnnonceVM annonceVM = new ReserverAfficherAnnonceVM();
 			annonceVM.setId(annonce.getId());
 			annonceVM.setAdresse_depart(annonce.getAdresseDepart());
@@ -53,6 +54,7 @@ public class ReserverCovoiturageParticulierController {
 			annonceVM.setVehicule(annonce.getVehiculeCovoitureur().getMarque() + " " + annonce.getVehiculeCovoitureur().getModele());
 			return annonceVM;
 		}).collect(Collectors.toList());
+
 		return ResponseEntity.status(HttpStatus.OK).body(afficherAnnonceVM);
 	}
 	
