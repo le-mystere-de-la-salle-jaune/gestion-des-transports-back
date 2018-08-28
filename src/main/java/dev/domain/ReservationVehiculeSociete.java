@@ -29,16 +29,22 @@ public class ReservationVehiculeSociete {
 	@JoinColumn(name = "vehicule")
 	private Vehicule vehicule;
 
+	@ManyToOne
+	@JoinColumn(name = "id_collaborateur")
+	private Collaborateur collaborateurs;
+
 	public ReservationVehiculeSociete() {
 		super();
 	}
 
-	public ReservationVehiculeSociete(Long id, LocalDateTime dateDebut, LocalDateTime dateFin, Vehicule vehicule) {
+	public ReservationVehiculeSociete(Long id, LocalDateTime dateDebut, LocalDateTime dateFin, Vehicule vehicule,
+			Collaborateur collaborateurs) {
 		super();
 		this.id = id;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.vehicule = vehicule;
+		this.collaborateurs = collaborateurs;
 	}
 
 	/**
@@ -99,6 +105,21 @@ public class ReservationVehiculeSociete {
 	 */
 	public void setVehicule(Vehicule vehicule) {
 		this.vehicule = vehicule;
+	}
+
+	/**
+	 * @return the collaborateurs
+	 */
+	public Collaborateur getCollaborateurs() {
+		return collaborateurs;
+	}
+
+	/**
+	 * @param collaborateurs
+	 *            the collaborateurs to set
+	 */
+	public void setCollaborateurs(Collaborateur collaborateurs) {
+		this.collaborateurs = collaborateurs;
 	}
 
 }

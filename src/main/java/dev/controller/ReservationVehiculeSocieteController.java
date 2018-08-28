@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.ReservationVehiculeSocieteVm;
@@ -29,19 +30,20 @@ public class ReservationVehiculeSocieteController {
 	}
 
 	// lister les reservations véhicule de société
-	@GetMapping("/api/reservationsSociete")
-	public ResponseEntity<List<ReservationVehiculeSocieteVm>> getReservations() {
+	@GetMapping("/api/reservationsSociete/{email}")
+	public ResponseEntity<List<ReservationVehiculeSocieteVm>> getReservations(@PathVariable String email) {
 		List<ReservationVehiculeSociete> reservationsVehiculeSoc = this.resaVehiculeSocRepo.findAll();
-		List<ReservationVehiculeSocieteVm> reservationsVehiculeSocVm = reservationsVehiculeSoc.stream().map(uneResa -> {
-			ReservationVehiculeSocieteVm resa = new ReservationVehiculeSocieteVm();
-			resa.setId(uneResa.getId());
-			resa.setDate_debut(uneResa.getDateDebut());
-			resa.setDate_fin(uneResa.getDateFin());
-			resa.setMarque(uneResa.getVehicule().getMarque());
-			resa.setModele(uneResa.getVehicule().getModele());
-			resa.setImmatriculation(uneResa.getVehicule().getImmatriculation());
-			return resa;
-		}).collect(Collectors.toList());
+		List<ReservationVehiculeSocieteVm> reservationsVehiculeSocVm = reservationsVehiculeSoc.stream()
+				.filter(uneResa -> (email.equals(uneResa.getCollaborateurs().getEmail()))).map(uneResa -> {
+					ReservationVehiculeSocieteVm resa = new ReservationVehiculeSocieteVm();
+					resa.setId(uneResa.getId());
+					resa.setDate_debut(uneResa.getDateDebut());
+					resa.setDate_fin(uneResa.getDateFin());
+					resa.setMarque(uneResa.getVehicule().getMarque());
+					resa.setModele(uneResa.getVehicule().getModele());
+					resa.setImmatriculation(uneResa.getVehicule().getImmatriculation());
+					return resa;
+				}).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(reservationsVehiculeSocVm);
 	}
 
