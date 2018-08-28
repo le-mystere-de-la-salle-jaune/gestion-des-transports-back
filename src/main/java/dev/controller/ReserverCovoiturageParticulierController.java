@@ -38,21 +38,23 @@ public class ReserverCovoiturageParticulierController {
 	}
 
 	// lister les reservations
-	@GetMapping("/api/reservations")
-	public ResponseEntity<List<ReserverAfficherAnnonceVM>> getReservations() {
+	@GetMapping("/api/reservations/{email}")
+	public ResponseEntity<List<ReserverAfficherAnnonceVM>> getReservations(@PathVariable String email) {
 		List<ReserverCovoiturageParticulier> reservations = this.reserverCovoitRepo.findAll();
-		List<ReserverAfficherAnnonceVM> reservationsVm = reservations.stream().map(uneResa -> {
-			ReserverAfficherAnnonceVM resa = new ReserverAfficherAnnonceVM();
-			resa.setAdresse_arriver(uneResa.getAdresseArrivee());
-			resa.setAdresse_depart(uneResa.getAdresseDepart());
-			resa.setChauffeur(uneResa.getCollaborateurs().getNom() + " " + uneResa.getCollaborateurs().getPrenom());
-			resa.setDepart(uneResa.getDateDepart());
-			resa.setId(uneResa.getId());
-			resa.setPlace(uneResa.getAnnonce().getNbPlace());
-			resa.setVehicule(uneResa.getAnnonce().getVehiculeCovoitureur().getMarque() + " "
-					+ uneResa.getAnnonce().getVehiculeCovoitureur().getModele());
-			return resa;
-		}).collect(Collectors.toList());
+		List<ReserverAfficherAnnonceVM> reservationsVm = reservations.stream()
+				.filter(uneResa -> (email.equals(uneResa.getCollaborateurs().getEmail()))).map(uneResa -> {
+					ReserverAfficherAnnonceVM resa = new ReserverAfficherAnnonceVM();
+					resa.setAdresse_arriver(uneResa.getAdresseArrivee());
+					resa.setAdresse_depart(uneResa.getAdresseDepart());
+					resa.setChauffeur(uneResa.getAnnonce().getCollaborateurs().getNom() + " "
+							+ uneResa.getAnnonce().getCollaborateurs().getPrenom());
+					resa.setDepart(uneResa.getDateDepart());
+					resa.setId(uneResa.getId());
+					resa.setPlace(uneResa.getAnnonce().getNbPlace());
+					resa.setVehicule(uneResa.getAnnonce().getVehiculeCovoitureur().getMarque() + " "
+							+ uneResa.getAnnonce().getVehiculeCovoitureur().getModele());
+					return resa;
+				}).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(reservationsVm);
 	}
 
