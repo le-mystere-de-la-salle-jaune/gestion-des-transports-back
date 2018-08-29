@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.controller.vm.VehiculeDetailVm;
 import dev.domain.Vehicule;
 import dev.services.VehiculeService;
 
@@ -43,6 +44,15 @@ public class VehiculeApiController {
 
 		Vehicule vehicule = this.vehiculeService.findVehiculeById(id);
 		return ResponseEntity.status(HttpStatus.OK).body(vehicule);
+	}
+
+	@GetMapping("/societe/{id}")
+	public ResponseEntity<VehiculeDetailVm> afficherVehiculeSocieteDetail(@PathVariable Long id) throws Exception {
+		Vehicule vehicule = this.vehiculeService.findVehiculeById(id);
+
+		VehiculeDetailVm vehiculeDetail = new VehiculeDetailVm(vehicule);
+
+		return ResponseEntity.status(HttpStatus.OK).body(vehiculeDetail);
 	}
 
 	@PostMapping

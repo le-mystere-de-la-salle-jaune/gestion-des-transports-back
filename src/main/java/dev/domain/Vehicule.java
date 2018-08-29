@@ -35,15 +35,18 @@ public class Vehicule {
 	private String immatriculation;
 
 	@Column(name = "marque")
+
 	private String marque;
 
 	@Column(name = "modele")
 	private String modele;
 
 	/**
-	 * categorie : Categories, énumaration contenant les différentes catégories
+	 * categorie : String, énumaration contenant les différentes catégories
 	 */
 	private String categorie;
+
+	private String etat = Etat.EN_SERVICE.getLibelle();
 
 	@Column(name = "places")
 	private int places;
@@ -94,6 +97,18 @@ public class Vehicule {
 		this.categorie = categorie.getLibelle();
 		this.places = places;
 		this.societe = societe;
+	}
+
+	public Vehicule(String photoUrl, String immatriculation, String marque, String modele, Categories categorie,
+			int places, boolean societe, String etat) {
+		this.photoUrl = photoUrl;
+		this.immatriculation = immatriculation;
+		this.marque = marque;
+		this.modele = modele;
+		this.categorie = categorie.getLibelle();
+		this.places = places;
+		this.societe = societe;
+		this.etat = etat;
 	}
 
 	/**
@@ -150,7 +165,7 @@ public class Vehicule {
 
 	/**
 	 * @param marque
-	 *            : definie la marque de la voiture
+	 *            : definie la marque du vehicule
 	 */
 	public void setMarque(String marque) {
 		this.marque = marque;
@@ -165,7 +180,7 @@ public class Vehicule {
 
 	/**
 	 * @param modele
-	 *            : definie la catégorie de la voiture
+	 *            : definie le modele du vehicule
 	 */
 	public void setModele(String modele) {
 		this.modele = modele;
@@ -180,7 +195,7 @@ public class Vehicule {
 
 	/**
 	 * @param categorie
-	 *            : définie la catégorie de la voiture
+	 *            : définie la catégorie de la vehicule
 	 */
 	public void setCategorie(String categorie) {
 		this.categorie = categorie;
@@ -195,14 +210,14 @@ public class Vehicule {
 
 	/**
 	 * @param places
-	 *            : définie le nombre de place de la voiture
+	 *            : définie le nombre de place du véhicule
 	 */
 	public void setPlaces(int places) {
 		this.places = places;
 	}
 
 	/**
-	 * @return true si le véhicule est un véhicule de société, 0 sinon.
+	 * @return true si le véhicule est un véhicule de société, false sinon.
 	 */
 	public boolean getSociete() {
 		return this.societe;
@@ -214,5 +229,20 @@ public class Vehicule {
 	 */
 	public void setSociete(boolean societe) {
 		this.societe = societe;
+	}
+
+	/**
+	 * @return l'état du véhicule.
+	 */
+	public String getEtat() {
+		return this.etat;
+	}
+
+	/**
+	 * @param etat
+	 *            : définie l'état du véhicule
+	 */
+	public void setEtat(String etat) {
+		this.etat = etat;
 	}
 }
