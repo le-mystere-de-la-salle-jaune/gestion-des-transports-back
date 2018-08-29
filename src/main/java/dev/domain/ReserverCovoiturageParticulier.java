@@ -15,12 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "annonce")
-public class Annonce {
+@Table(name = "reserver_covoit_particulier")
+public class ReserverCovoiturageParticulier {
 
-	/**
-	 * Usage : Long : id
-	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,6 +25,9 @@ public class Annonce {
 	@ManyToOne
 	@JoinColumn(name = "id_collaborateur")
 	private Collaborateur collaborateurs;
+
+	@Column(name = "date_depart")
+	private LocalDateTime dateDepart;
 
 	/**
 	 * Comme deux objets adresse sont présent pour l'annoncone, on redéfinis
@@ -50,14 +50,22 @@ public class Annonce {
 	private Adresse adresseArrivee;
 
 	@ManyToOne
-	@JoinColumn(name = "id_vehicule")
-	private Vehicule vehiculeCovoitureur;
+	@JoinColumn(name = "id_annonce")
+	private Annonce annonce;
 
-	@Column(name = "date_depart")
-	private LocalDateTime dateDepart;
+	public ReserverCovoiturageParticulier() {
+		super();
+	}
 
-	@Column(name = "nombre_place")
-	private int nbPlace;
+	public ReserverCovoiturageParticulier(Collaborateur collaborateurs, LocalDateTime dateDepart, Adresse adresseDepart,
+			Adresse adresseArrivee, Annonce annonce) {
+		super();
+		this.dateDepart = dateDepart;
+		this.adresseDepart = adresseDepart;
+		this.adresseArrivee = adresseArrivee;
+		this.annonce = annonce;
+		this.collaborateurs = collaborateurs;
+	}
 
 	public Long getId() {
 		return id;
@@ -67,12 +75,12 @@ public class Annonce {
 		this.id = id;
 	}
 
-	public Collaborateur getCollaborateurs() {
-		return collaborateurs;
+	public LocalDateTime getDateDepart() {
+		return dateDepart;
 	}
 
-	public void setCollaborateurs(Collaborateur collaborateurs) {
-		this.collaborateurs = collaborateurs;
+	public void setDateDepart(LocalDateTime dateDepart) {
+		this.dateDepart = dateDepart;
 	}
 
 	public Adresse getAdresseDepart() {
@@ -91,27 +99,20 @@ public class Annonce {
 		this.adresseArrivee = adresseArrivee;
 	}
 
-	public Vehicule getVehiculeCovoitureur() {
-		return vehiculeCovoitureur;
+	public Annonce getAnnonce() {
+		return annonce;
 	}
 
-	public void setVehiculeCovoitureur(Vehicule vehiculeCovoitureur) {
-		this.vehiculeCovoitureur = vehiculeCovoitureur;
+	public void setAnnonce(Annonce optional) {
+		this.annonce = optional;
 	}
 
-	public LocalDateTime getDateDepart() {
-		return dateDepart;
+	public Collaborateur getCollaborateurs() {
+		return collaborateurs;
 	}
 
-	public void setDateDepart(LocalDateTime dateDepart) {
-		this.dateDepart = dateDepart;
+	public void setCollaborateurs(Collaborateur collaborateurs) {
+		this.collaborateurs = collaborateurs;
 	}
 
-	public int getNbPlace() {
-		return nbPlace;
-	}
-
-	public void setNbPlace(int nbPlace) {
-		this.nbPlace = nbPlace;
-	}
 }

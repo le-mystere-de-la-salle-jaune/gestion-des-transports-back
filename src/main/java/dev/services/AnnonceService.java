@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dev.domain.Annonce;
-import dev.domain.Collegue;
+import dev.domain.Collaborateur;
 import dev.repository.AnnonceRepo;
-import dev.repository.CollegueRepo;
+import dev.repository.CollaborateurRepo;
 import dev.repository.VehiculeRepo;
 
 @Service
@@ -14,12 +14,12 @@ public class AnnonceService {
 	
 	AnnonceRepo annonceRepo;
 	VehiculeRepo vehiculeRepo;
-	CollegueRepo collegueRepo;
+	CollaborateurRepo collabRepo;
 	
-	public AnnonceService(AnnonceRepo annonceRepo, VehiculeRepo vehiculeRepo, CollegueRepo collegueRepo){
+	public AnnonceService(AnnonceRepo annonceRepo, VehiculeRepo vehiculeRepo, CollaborateurRepo collabRepo){
 		this.annonceRepo = annonceRepo;
 		this.vehiculeRepo = vehiculeRepo;
-		this.collegueRepo = collegueRepo;
+		this.collabRepo = collabRepo;
 	}
 
 	@Transactional
@@ -30,8 +30,8 @@ public class AnnonceService {
 		
 	}
 
-	public Collegue getCollabByEmail(String userEmail) {
-		return collegueRepo.findByEmail(userEmail).orElse(null);
+	public Collaborateur getCollabByEmail(String userEmail) {
+		return collabRepo.findByEmail(userEmail).orElse(null);
 	}
 
 }
