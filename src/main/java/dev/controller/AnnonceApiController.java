@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.annonce.AnnonceVm;
+import dev.domain.Annonce;
 import dev.services.AnnonceService;
 
 @RestController
@@ -25,7 +26,9 @@ public class AnnonceApiController {
 	public ResponseEntity<?> enregistrerAnnonce(@RequestBody AnnonceVm annonceToSave) {
 		
 		System.out.println(annonceToSave);
-		annonceService.saveNewAnnonce(annonceToSave.toAnnonce());
+		Annonce annonceTemp = annonceToSave.toAnnonce();
+		annonceTemp.setCollaborateurs(annonceService.getCollabByEmail(annonceToSave.getUserEmail()));
+		annonceService.saveNewAnnonce(annonceTemp);
 		
 		return ResponseEntity.status(HttpStatus.OK).body("Annonce enregistrer.");
 	}

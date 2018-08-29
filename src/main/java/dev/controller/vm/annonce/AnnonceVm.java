@@ -7,14 +7,16 @@ public class AnnonceVm {
 	private VehiculeAnnonceVm vehiculeAnnonce;
 	private ItineraireAnnonceVm itineraireAnnonce;
 	private HorraireAnnonceVm horraireAnnonce;
+	private String userEmail;
 	
 	
 	public AnnonceVm(VehiculeAnnonceVm vehiculeAnnonce, ItineraireAnnonceVm itineraireAnnonce,
-			HorraireAnnonceVm horraireAnnonce) {
+			HorraireAnnonceVm horraireAnnonce, String userEmail) {
 		super();
 		this.vehiculeAnnonce = vehiculeAnnonce;
 		this.itineraireAnnonce = itineraireAnnonce;
 		this.horraireAnnonce = horraireAnnonce;
+		this.userEmail = userEmail;
 	}
 	
 	public AnnonceVm(){
@@ -44,6 +46,14 @@ public class AnnonceVm {
 		this.horraireAnnonce = horraireAnnonce;
 	}
 
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
 	public Annonce toAnnonce() {
 
 		Annonce annonceToReturn = new Annonce();
@@ -54,8 +64,6 @@ public class AnnonceVm {
 		annonceToReturn.setNbPlace(vehiculeAnnonce.getNbPlace());
 		
 		annonceToReturn.setDateDepart(horraireAnnonce.toHorraire());
-		
-		
 		
 		return annonceToReturn;
 	}
