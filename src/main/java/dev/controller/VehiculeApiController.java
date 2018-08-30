@@ -78,6 +78,9 @@ public class VehiculeApiController {
 		v.setCategorie(vehicule.getCategorie());
 		v.setPlaces(vehicule.getPlaces());
 		v.setSociete(vehicule.getSociete());
+		System.out.println(vehicule.getEtat());
+		v.setEtat(vehicule.getEtat());
+		System.out.println(v.getEtat());
 		vehiculeService.maj(v);
 
 		return ResponseEntity.status(HttpStatus.OK).body(v);

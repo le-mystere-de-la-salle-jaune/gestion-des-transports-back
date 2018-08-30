@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import dev.domain.Etat;
 import dev.domain.Vehicule;
 
 public class VehiculeDetailVm {
@@ -28,7 +27,7 @@ public class VehiculeDetailVm {
 
 	private String categorie;
 
-	private String etat = Etat.EN_SERVICE.toString();
+	private String etat;
 
 	public VehiculeDetailVm() {
 

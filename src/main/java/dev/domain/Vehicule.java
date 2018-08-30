@@ -111,6 +111,18 @@ public class Vehicule {
 		this.etat = etat;
 	}
 
+	public Vehicule(String photoUrl, String immatriculation, String marque, String modele, Categories categorie,
+			int places, String etat) {
+		this.photoUrl = photoUrl;
+		this.immatriculation = immatriculation;
+		this.marque = marque;
+		this.modele = modele;
+		this.categorie = categorie.getLibelle();
+		this.places = places;
+		this.societe = societe;
+		this.etat = etat;
+	}
+
 	/**
 	 * @return l'id du véhicule.
 	 */
@@ -240,7 +252,7 @@ public class Vehicule {
 
 	/**
 	 * @param etat
-	 *            : définie l'état du véhicule
+	 *            : définie l'état du véhicule.
 	 */
 	public void setEtat(String etat) {
 		this.etat = etat;
