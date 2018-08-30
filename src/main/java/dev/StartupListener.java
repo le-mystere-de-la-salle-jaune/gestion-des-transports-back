@@ -177,6 +177,7 @@ public class StartupListener {
 		resa.setCollaborateurs(col2);
 		resa.setDateDepart(LocalDateTime.of(2018, 12, 24, 10, 00));
 		resa.setId(1L);
+		resa.setStatut(true);
 		resaRepo.save(resa);
 
 		ReserverCovoiturageParticulier resa1 = new ReserverCovoiturageParticulier();
@@ -186,6 +187,7 @@ public class StartupListener {
 		resa1.setCollaborateurs(col2);
 		resa1.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
 		resa1.setId(2L);
+		resa1.setStatut(true);
 		resaRepo.save(resa1);
 
 		ReserverCovoiturageParticulier resa2 = new ReserverCovoiturageParticulier();
@@ -195,6 +197,7 @@ public class StartupListener {
 		resa2.setCollaborateurs(col2);
 		resa2.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
 		resa2.setId(3L);
+		resa2.setStatut(true);
 		resaRepo.save(resa2);
 
 		ReserverCovoiturageParticulier resa3 = new ReserverCovoiturageParticulier();
@@ -204,6 +207,7 @@ public class StartupListener {
 		resa3.setCollaborateurs(col2);
 		resa3.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
 		resa3.setId(4L);
+		resa3.setStatut(true);
 		resaRepo.save(resa3);
 
 		ReserverCovoiturageParticulier resa4 = new ReserverCovoiturageParticulier();
@@ -213,6 +217,7 @@ public class StartupListener {
 		resa4.setCollaborateurs(col2);
 		resa4.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
 		resa4.setId(5L);
+		resa4.setStatut(true);
 		resaRepo.save(resa4);
 
 		ReserverCovoiturageParticulier resa5 = new ReserverCovoiturageParticulier();
@@ -222,6 +227,7 @@ public class StartupListener {
 		resa5.setCollaborateurs(col2);
 		resa5.setDateDepart(LocalDateTime.of(2014, 12, 24, 10, 00));
 		resa5.setId(6L);
+		resa5.setStatut(true);
 		resaRepo.save(resa5);
 
 		ReservationVehiculeSociete resaSociete1 = new ReservationVehiculeSociete();

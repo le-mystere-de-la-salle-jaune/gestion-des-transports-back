@@ -53,6 +53,7 @@ public class ReserverCovoiturageParticulierController {
 					resa.setPlace(uneResa.getAnnonce().getNbPlace());
 					resa.setVehicule(uneResa.getAnnonce().getVehiculeCovoitureur().getMarque() + " "
 							+ uneResa.getAnnonce().getVehiculeCovoitureur().getModele());
+					resa.setStatut(uneResa.getStatut());
 					return resa;
 				}).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(reservationsVm);
@@ -83,6 +84,7 @@ public class ReserverCovoiturageParticulierController {
 		return ResponseEntity.status(HttpStatus.OK).body(afficherAnnonceVM);
 	}
 
+	// création d'une reservation
 	@PutMapping("/reserver/creer")
 	public ResponseEntity<CreerReservationVM> ajouterReservation(@RequestBody CreerReservationVM reservation) {
 		Adresse adresseDepart = new Adresse();
@@ -92,24 +94,33 @@ public class ReserverCovoiturageParticulierController {
 		adresseDepart.setPays(reservation.getAdresse_depart().getPays());
 		adresseDepart.setVille(reservation.getAdresse_depart().getVille());
 
-		Adresse adresseArriver = new Adresse();
-		adresseArriver.setCodePostal(reservation.getAdresse_arriver().getCodePostal());
-		adresseArriver.setDesignationVoie(reservation.getAdresse_arriver().getDesignationVoie());
-		adresseArriver.setNumeroVoie(reservation.getAdresse_arriver().getNumeroVoie());
-		adresseArriver.setPays(reservation.getAdresse_arriver().getPays());
-		adresseArriver.setVille(reservation.getAdresse_depart().getVille());
+		Adresse adresseArrivee = new Adresse();
+		adresseArrivee.setCodePostal(reservation.getAdresse_arriver().getCodePostal());
+		adresseArrivee.setDesignationVoie(reservation.getAdresse_arriver().getDesignationVoie());
+		adresseArrivee.setNumeroVoie(reservation.getAdresse_arriver().getNumeroVoie());
+		adresseArrivee.setPays(reservation.getAdresse_arriver().getPays());
+		adresseArrivee.setVille(reservation.getAdresse_depart().getVille());
 
 		Annonce ann = annonceRepo.findById(reservation.getId_annonce()).get();
-		Collaborateur collegue = collaborateurRepo.findById(reservation.getId_collegue()).get();
+		Collaborateur collaborateur = collaborateurRepo.findById(reservation.getId_collegue()).get();
+
 		// sauvegarde de la réservation
-		reserverCovoitRepo.save(new ReserverCovoiturageParticulier(collegue, reservation.getDepart(), adresseDepart,
-				adresseArriver, ann));
+		reserverCovoitRepo.save(new ReserverCovoiturageParticulier(collaborateur, reservation.getDepart(),
+				adresseDepart, adresseArrivee, ann, true));
+
 		// on retire 1 place à l'annonce
 		ann.setNbPlace(ann.getNbPlace() - 1);
 		annonceRepo.save(ann);
 
 		return ResponseEntity.ok().body(reservation);
-
 	}
 
+	// modification du statut d'une reservation
+	@PutMapping("/api/reservation/{id}")
+	public ResponseEntity<ReserverAfficherAnnonceVM> modifierStatut(@PathVariable Long id) {
+		ReserverCovoiturageParticulier reservation = reserverCovoitRepo.findById(id).get();
+		reservation.setStatut(false);
+		reserverCovoitRepo.save(reservation);
+		return ResponseEntity.ok().body(new ReserverAfficherAnnonceVM(reservation));
+	}
 }
