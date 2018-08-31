@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import dev.controller.vm.DateDebutFinVM;
 import dev.controller.vm.ReservationVehiculeSocieteVm;
+import dev.controller.vm.VehiculeDetailVm;
+
 import dev.domain.Vehicule;
 import dev.services.VehiculeService;
 
@@ -48,6 +51,15 @@ public class VehiculeApiController {
 		return ResponseEntity.status(HttpStatus.OK).body(vehicule);
 	}
 
+	@GetMapping("/societe/{id}")
+	public ResponseEntity<VehiculeDetailVm> afficherVehiculeSocieteDetail(@PathVariable Long id) throws Exception {
+		Vehicule vehicule = this.vehiculeService.findVehiculeById(id);
+
+		VehiculeDetailVm vehiculeDetail = new VehiculeDetailVm(vehicule);
+
+		return ResponseEntity.status(HttpStatus.OK).body(vehiculeDetail);
+	}
+
 	@PostMapping
 	public ResponseEntity<Vehicule> creer(@RequestBody Vehicule vehicule) {
 		Vehicule v = new Vehicule(vehicule.getImmatriculation(), vehicule.getMarque(), vehicule.getModele());
@@ -71,6 +83,9 @@ public class VehiculeApiController {
 		v.setCategorie(vehicule.getCategorie());
 		v.setPlaces(vehicule.getPlaces());
 		v.setSociete(vehicule.getSociete());
+		System.out.println(vehicule.getEtat());
+		v.setEtat(vehicule.getEtat());
+		System.out.println(v.getEtat());
 		vehiculeService.maj(v);
 
 		return ResponseEntity.status(HttpStatus.OK).body(v);
