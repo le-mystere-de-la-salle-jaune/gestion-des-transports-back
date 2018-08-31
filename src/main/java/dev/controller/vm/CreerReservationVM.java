@@ -6,7 +6,7 @@ import dev.domain.Adresse;
 
 public class CreerReservationVM {
 	private Long id_annonce;
-	private Long id_collegue;
+	private String id_collegue;
 	private LocalDateTime depart;
 	private Adresse adresse_depart;
 	private Adresse adresse_arriver;
@@ -15,7 +15,7 @@ public class CreerReservationVM {
 		super();
 	}
 
-	public CreerReservationVM(Long id_annonce, Long id_collegue, LocalDateTime depart, Adresse adresse_depart,
+	public CreerReservationVM(Long id_annonce, String id_collegue, LocalDateTime depart, Adresse adresse_depart,
 			Adresse adresse_arriver) {
 		super();
 		this.id_annonce = id_annonce;
@@ -33,11 +33,11 @@ public class CreerReservationVM {
 		this.id_annonce = id_annonce;
 	}
 
-	public Long getId_collegue() {
+	public String getId_collegue() {
 		return id_collegue;
 	}
 
-	public void setId_collegue(Long id_collegue) {
+	public void setId_collegue(String id_collegue) {
 		this.id_collegue = id_collegue;
 	}
 

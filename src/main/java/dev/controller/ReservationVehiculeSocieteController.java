@@ -12,16 +12,9 @@ import javax.persistence.ManyToOne;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.AjouterReservationSocieteVM;
@@ -38,7 +31,6 @@ import dev.repository.VehiculeRepo;
 import dev.services.VehiculeService;
 
 @RestController
-@RequestMapping(value = "/api/reservationsSociete")
 public class ReservationVehiculeSocieteController {
 
 	private ReservationVehiculeSocieteRepo resaVehiculeSocRepo;
@@ -46,28 +38,26 @@ public class ReservationVehiculeSocieteController {
 	private CollaborateurRepo collaborateurRepo;
 
 	public ReservationVehiculeSocieteController(ReservationVehiculeSocieteRepo resaVehiculeSocRepo, VehiculeService vehiculeService,
-			VehiculeService vehiculeService, CollaborateurRepo collaborateurRepo) {
+			CollaborateurRepo collaborateurRepo) {
 		this.resaVehiculeSocRepo = resaVehiculeSocRepo;
-		this.vehiculeService = vehiculeService;
 		this.collaborateurRepo = collaborateurRepo;
 		this.vehiculeService = vehiculeService;
 	}
 
 	// lister les reservations véhicule de société
-	@GetMapping("/api/reservationsSociete/{email}")
-	public ResponseEntity<List<ReservationVehiculeSocieteVm>> getReservations(@PathVariable String email) {
-		List<ReservationVehiculeSociete> reservationsVehiculeSoc = this.resaVehiculeSocRepo.findAll();
-		List<ReservationVehiculeSocieteVm> reservationsVehiculeSocVm = reservationsVehiculeSoc.stream()
-				.filter(uneResa -> (email.equals(uneResa.getCollaborateurs().getEmail()))).map(uneResa -> {
-					ReservationVehiculeSocieteVm resa = new ReservationVehiculeSocieteVm();
-					resa.setId(uneResa.getId());
-					resa.setDate_debut(uneResa.getDateDebut());
-					resa.setDate_fin(uneResa.getDateFin());
-					resa.setMarque(uneResa.getVehicule().getMarque());
-					resa.setModele(uneResa.getVehicule().getModele());
-					resa.setImmatriculation(uneResa.getVehicule().getImmatriculation());
-					return resa;
-				}).collect(Collectors.toList());
+	@GetMapping("/api/reservationsSociete")
+	public ResponseEntity<List<ReservationVehiculeSocieteVm>> getReservations() {
+		List<ReservationVehiculeSociete> reservationsVehiculeSoc = resaVehiculeSocRepo.findAll();
+		List<ReservationVehiculeSocieteVm> reservationsVehiculeSocVm = reservationsVehiculeSoc.stream().map(uneResa -> {
+			ReservationVehiculeSocieteVm resa = new ReservationVehiculeSocieteVm();
+			resa.setId(uneResa.getId());
+			resa.setDate_debut(uneResa.getDateDebut());
+			resa.setDate_fin(uneResa.getDateFin());
+			resa.setMarque(uneResa.getVehicule().getMarque());
+			resa.setModele(uneResa.getVehicule().getModele());
+			resa.setImmatriculation(uneResa.getVehicule().getImmatriculation());
+			return resa;
+		}).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(reservationsVehiculeSocVm);
 	}		
 	
@@ -95,6 +85,11 @@ public class ReservationVehiculeSocieteController {
 			return res;
 		} ).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(vehicules);
+	}
+	
+	@GetMapping("/json")
+	public ResponseEntity<DateDebutFinVM> test(){
+		return ResponseEntity.status(HttpStatus.OK).body(new DateDebutFinVM(LocalDateTime.of(2018,10,9, 10, 0),LocalDateTime.of(2018,10,9, 11, 0)));
 	}
 	
 	@PutMapping("/api/AjouterReservation")

@@ -99,8 +99,10 @@ public class ReserverCovoiturageParticulierController {
 		adresseArriver.setPays(reservation.getAdresse_arriver().getPays());
 		adresseArriver.setVille(reservation.getAdresse_depart().getVille());
 
+		
 		Annonce ann = annonceRepo.findById(reservation.getId_annonce()).get();
-		Collaborateur collegue = collaborateurRepo.findById(reservation.getId_collegue()).get();
+		Collaborateur collegue = collaborateurRepo.findAll().stream().filter(c -> c.getEmail().equals(reservation.getId_collegue())).findFirst().get();
+		System.out.println(collegue.getId());
 		// sauvegarde de la réservation
 		reserverCovoitRepo.save(new ReserverCovoiturageParticulier(collegue, reservation.getDepart(), adresseDepart,
 				adresseArriver, ann));
