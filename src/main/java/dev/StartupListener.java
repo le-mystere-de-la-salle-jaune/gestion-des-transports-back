@@ -154,7 +154,7 @@ public class StartupListener {
 
 		Annonce ann = new Annonce();
 		ann.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
-		ann.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxelles", "ZDF-54", "Belgique"));
+		ann.setAdresseDepart(new Adresse("85", "Rue du troquet", "nantes", "44300", "France"));
 		ann.setCollaborateurs(col1);
 		ann.setDateDepart(LocalDateTime.of(2019, 9, 25, 10, 20));
 		ann.setVehiculeCovoitureur(vehicule4);
@@ -162,8 +162,8 @@ public class StartupListener {
 		annonceRepo.save(ann);
 
 		Annonce ann2 = new Annonce();
-		ann2.setAdresseArrivee(new Adresse("2", "bd de la ville", "Paris", "76000", "France"));
-		ann2.setAdresseDepart(new Adresse("85", "Rue de la fritte", "Bruxelles", "ZDF-54", "Belgique"));
+		ann2.setAdresseArrivee(new Adresse("3", "rue santos dumont", "Nantes", "44000", "France"));
+		ann2.setAdresseDepart(new Adresse("28", "Rue du puits jacob", "Rennes", "35000", "France"));
 		ann2.setCollaborateurs(col1);
 		ann2.setDateDepart(LocalDateTime.of(2014, 9, 25, 10, 20));
 		ann2.setVehiculeCovoitureur(vehicule4);

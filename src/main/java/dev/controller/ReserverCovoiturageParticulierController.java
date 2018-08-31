@@ -107,7 +107,7 @@ public class ReserverCovoiturageParticulierController {
 		System.out.println(collegue.getId());
 
 		// sauvegarde de la réservation
-		reserverCovoitRepo.save(new ReserverCovoiturageParticulier(collaborateur, reservation.getDepart(),
+		reserverCovoitRepo.save(new ReserverCovoiturageParticulier(collegue, reservation.getDepart(),
 				adresseDepart, adresseArrivee, ann, true));
 
 		// on retire 1 place à l'annonce
