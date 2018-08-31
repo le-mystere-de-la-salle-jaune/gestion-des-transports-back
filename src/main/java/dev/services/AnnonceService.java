@@ -41,7 +41,9 @@ public class AnnonceService {
 
 	public List<AnnonceVm> getAllAnnonceByEmail(String userEmail) {
 		// TODO Auto-generated method stub
-		return annonceRepo.findAllbyEmail(userEmail).orElse(new ArrayList<>()).stream().map(ann -> ann.toVm()).collect(Collectors.toList());
+		Long temp = getCollabByEmail(userEmail).getId();
+		System.out.println(temp);
+		return annonceRepo.findAllbyEmail(temp).orElse(new ArrayList<>()).stream().map(ann -> ann.toVm()).collect(Collectors.toList());
 		
 	}
 

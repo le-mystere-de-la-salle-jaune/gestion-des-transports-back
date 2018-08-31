@@ -12,8 +12,8 @@ import dev.domain.Annonce;
 public interface AnnonceRepo extends JpaRepository<Annonce, Long>{
 
 	
-	@Query("select ann from Annonce ann, Collaborateur colab where colab.email = :email")
-	Optional<List<Annonce>> findAllbyEmail(@Param("email") String email);
+	@Query("select ann from Annonce ann where ann.collaborateurs.id = :idCollab")
+	Optional<List<Annonce>> findAllbyEmail(@Param("idCollab") Long idCollab);
 	
 }
 
