@@ -3,12 +3,13 @@ package dev.controller.vm;
 public class ReservationAfficherVehiculeSocieteVm {
 	
 	private Long id;
+	private String url;
 	private String marque;
 	private String modele;
 	private String immatriculation;
 	private boolean dispo;
 	
-	public ReservationAfficherVehiculeSocieteVm(Long id, String marque, String modele, String immatriculation,
+	public ReservationAfficherVehiculeSocieteVm(String image, Long id, String marque, String modele, String immatriculation,
 			boolean dispo) {
 		super();
 		this.id = id;
@@ -19,6 +20,14 @@ public class ReservationAfficherVehiculeSocieteVm {
 	}
 	public ReservationAfficherVehiculeSocieteVm() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String image) {
+		this.url = image;
 	}
 	public Long getId() {
 		return id;
