@@ -14,6 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import dev.controller.vm.annonce.AdresseVm;
+import dev.controller.vm.annonce.AnnonceVm;
+import dev.controller.vm.annonce.HorraireAnnonceVm;
+import dev.controller.vm.annonce.ItineraireAnnonceVm;
+import dev.controller.vm.annonce.VehiculeAnnonceVm;
+
 @Entity
 @Table(name = "annonce")
 public class Annonce {
@@ -113,5 +119,13 @@ public class Annonce {
 
 	public void setNbPlace(int nbPlace) {
 		this.nbPlace = nbPlace;
+	}
+
+	public AnnonceVm toVm() {
+		return new AnnonceVm(new VehiculeAnnonceVm(vehiculeCovoitureur.getImmatriculation(), vehiculeCovoitureur.getMarque(), vehiculeCovoitureur.getModele(), nbPlace)
+				,new ItineraireAnnonceVm(new AdresseVm(adresseDepart.getNumeroVoie(), adresseDepart.getDesignationVoie(), adresseDepart.getVille(), adresseDepart.getCodePostal(), adresseDepart.getPays())
+						,new AdresseVm(adresseArrivee.getNumeroVoie(), adresseArrivee.getDesignationVoie(), adresseArrivee.getVille(), adresseArrivee.getCodePostal(), adresseArrivee.getPays())
+						, 0, "0h0mn")
+				, new HorraireAnnonceVm(dateDepart.getHour(), dateDepart.getMinute(), dateDepart.toLocalDate()), collaborateurs.getEmail());
 	}
 }
