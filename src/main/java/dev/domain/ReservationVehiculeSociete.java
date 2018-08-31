@@ -28,6 +28,10 @@ public class ReservationVehiculeSociete {
 	@ManyToOne
 	@JoinColumn(name = "vehicule")
 	private Vehicule vehicule;
+	
+	@ManyToOne
+	@JoinColumn(name = "collab")
+	private Collaborateur collab;
 
 	@ManyToOne
 	@JoinColumn(name = "id_collaborateur")
@@ -52,6 +56,14 @@ public class ReservationVehiculeSociete {
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	public Collaborateur getCollab() {
+		return collab;
+	}
+
+	public void setCollab(Collaborateur collab) {
+		this.collab = collab;
 	}
 
 	/**
