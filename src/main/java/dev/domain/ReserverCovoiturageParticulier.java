@@ -53,18 +53,22 @@ public class ReserverCovoiturageParticulier {
 	@JoinColumn(name = "id_annonce")
 	private Annonce annonce;
 
+	@Column(name = "statut")
+	private boolean statut;
+
 	public ReserverCovoiturageParticulier() {
 		super();
 	}
 
 	public ReserverCovoiturageParticulier(Collaborateur collaborateurs, LocalDateTime dateDepart, Adresse adresseDepart,
-			Adresse adresseArrivee, Annonce annonce) {
+			Adresse adresseArrivee, Annonce annonce, boolean statut) {
 		super();
 		this.dateDepart = dateDepart;
 		this.adresseDepart = adresseDepart;
 		this.adresseArrivee = adresseArrivee;
 		this.annonce = annonce;
 		this.collaborateurs = collaborateurs;
+		this.statut = statut;
 	}
 
 	public Long getId() {
@@ -113,6 +117,14 @@ public class ReserverCovoiturageParticulier {
 
 	public void setCollaborateurs(Collaborateur collaborateurs) {
 		this.collaborateurs = collaborateurs;
+	}
+
+	public boolean getStatut() {
+		return statut;
+	}
+
+	public void setStatut(boolean statut) {
+		this.statut = statut;
 	}
 
 }
